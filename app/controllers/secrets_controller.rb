@@ -1,25 +1,13 @@
 class SecretsController < ApplicationController
-  def new
+  before_action :require_login
+
+  def show
   end
 
-  def create
-    if params[:name] == nil
-      redirect_to controller: 'sessions', action: 'new'
-    elsif params[:name] == ""
-      redirect_to controller: 'sessions', action: 'new'
-    else
-      params[:name] != nil
-      session[:name] = params[:name]
-      redirect_to '/'
-    end
+  private
+
+  def require_login
+    redirect_to controller: 'sessions', action: 'new'  unless current_user
   end
 
-  def destroy
-    session.delete :name
-    redirect_to '/login'
-  end
-
-  def current_user
-
-  end
 end
